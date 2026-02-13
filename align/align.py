@@ -229,13 +229,6 @@ class NeedlemanWunsch:
         current_matrix = max(scores, key=scores.get)
         self.alignment_score = scores[current_matrix]
 
-        print("DEBUG scores:", scores)  # Add this
-    
-    
-        print("DEBUG current_matrix:", current_matrix)  # Add this
-        print("DEBUG alignment_score:", self.alignment_score)  # Add this
-        s
-        
         # 2 -  Trace back until (0,0)
         while i > 0 or j > 0:
             if current_matrix == "align_M":
