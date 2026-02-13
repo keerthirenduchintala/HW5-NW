@@ -12,8 +12,8 @@ def test_nw_alignment():
     Use the BLOSUM62 matrix and a gap open penalty
     of -10 and a gap extension penalty of -1.
     """
-    seq1, _ = read_fasta("./data/test_seq1.fa")
-    seq2, _ = read_fasta("./data/test_seq2.fa")
+    seq1,header = read_fasta("./data/test_seq1.fa")
+    seq2,header = read_fasta("./data/test_seq2.fa")
 
     # Matrix dimensions are correct
     # M[0][0] = 0
@@ -51,8 +51,8 @@ def test_nw_backtrace():
     Use the BLOSUM62 matrix. Use a gap open
     penalty of -10 and a gap extension penalty of -1.
     """
-    seq3, _ = read_fasta("./data/test_seq3.fa")
-    seq4, _ = read_fasta("./data/test_seq4.fa")
+    seq3,header = read_fasta("./data/test_seq3.fa")
+    seq4,header = read_fasta("./data/test_seq4.fa")
     
     # Create NW object
     # Run alignment
