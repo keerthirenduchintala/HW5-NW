@@ -217,7 +217,49 @@ class NeedlemanWunsch:
          	(alignment score, seqA alignment, seqB alignment) : Tuple[float, str, str]
          		the score and corresponding strings for the alignment of seqA and seqB
         """
+        # 1 - find the maximum value across the three matrices (bottom right)
+        i = len(self._seqA)
+        j = len(self._seqB)
+
+        scores = {
+        "align_M": self._align_matrix[i][j],
+        "gapA": self._gapA_matrix[i][j],
+        "gapB": self._gapB_matrix[i][j]
+        }
+        current_matrix = max(scores, key=scores.get)
+        self.alignment_score = scores[current_matrix]
+
+        print("DEBUG scores:", scores)  # Add this
+    
+    
+        print("DEBUG current_matrix:", current_matrix)  # Add this
+        print("DEBUG alignment_score:", self.alignment_score)  # Add this
+        s
         
+        # 2 -  Trace back until (0,0)
+        while i > 0 or j > 0:
+            if current_matrix == "align_M":
+                self.seqA_align += self._seqA[i-1]
+                self.seqB_align += self._seqB[j-1]
+                current_matrix = self._back[i][j]
+                i -= 1
+                j -= 1     
+            elif current_matrix == "gapA":
+                self.seqA_align += "-"
+                self.seqB_align += self._seqB[j-1]
+                current_matrix = self._back_A[i][j]
+                j -= 1
+            else:  # gapB
+                self.seqA_align += self._seqA[i-1]
+                self.seqB_align += "-"
+                current_matrix = self._back_B[i][j]
+                i -= 1
+              
+        
+        # Step 3: Reverse strings (we built them backwards)
+        self.seqA_align = self.seqA_align[::-1]
+        self.seqB_align = self.seqB_align[::-1]
+
 
         return (self.alignment_score, self.seqA_align, self.seqB_align)
 
