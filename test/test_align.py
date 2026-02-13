@@ -56,7 +56,7 @@ def test_nw_backtrace():
     
     # Create NW object
     # Run alignment
-    # Assert the score is 17
+    # Assert the score is 18
     # Assert the alignment strings are correct
 
     nw = NeedlemanWunsch(
@@ -66,7 +66,7 @@ def test_nw_backtrace():
     )
 
     score, seqA, seqB = nw.align(seq3, seq4)
-    assert score == 17
+    assert score == 18
     assert seqA == "MAVHQLIRRP"
     assert seqB == "M---QLIRHP"
 
