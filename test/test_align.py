@@ -14,8 +14,34 @@ def test_nw_alignment():
     """
     seq1, _ = read_fasta("./data/test_seq1.fa")
     seq2, _ = read_fasta("./data/test_seq2.fa")
-    pass
-    
+
+    # Matrix dimensions are correct
+    # M[0][0] = 0
+    # Final score in matrices matches alignment_score
+
+    nw = NeedlemanWunsch(
+        sub_matrix_file="./substitution_matrices/BLOSUM62.mat", 
+        gap_open=-10,
+        gap_extend=-1
+    )
+
+    score, seqA, seqB = nw.align(seq1, seq2)
+
+    # Check matrix dimensions
+    assert nw._align_matrix.shape == (len(seq1)+1, len(seq2)+1)
+    assert nw._gapA_matrix.shape == (len(seq1)+1, len(seq2)+1)
+    assert nw._gapB_matrix.shape == (len(seq1)+1, len(seq2)+1)
+
+    # Check M[0][0] = 0
+    assert nw._align_matrix[0][0] == 0
+
+    # Check alignment score matches best score at bottom-right
+    final_scores = [
+        nw._align_matrix[len(seq1)][len(seq2)],
+        nw._gapA_matrix[len(seq1)][len(seq2)],
+        nw._gapB_matrix[len(seq1)][len(seq2)]
+    ]
+    assert score == max(final_scores)   
 
 def test_nw_backtrace():
     """
@@ -27,7 +53,22 @@ def test_nw_backtrace():
     """
     seq3, _ = read_fasta("./data/test_seq3.fa")
     seq4, _ = read_fasta("./data/test_seq4.fa")
-    pass
+    
+    # Create NW object
+    # Run alignment
+    # Assert the score is 17
+    # Assert the alignment strings are correct
+
+    nw = NeedlemanWunsch(
+        sub_matrix_file="./substitution_matrices/BLOSUM62.mat", 
+        gap_open=-10,
+        gap_extend=-1
+    )
+
+    score, seqA, seqB = nw.align(seq3, seq4)
+    assert score == 17
+    assert seqA == "MAVHQLIRRP"
+    assert seqB == "M---QLIRHP"
 
 
 
